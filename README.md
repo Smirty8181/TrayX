@@ -1,8 +1,8 @@
 # TrayX
 
-**Windows System Tray Enhancement** — модернизация системного трея Windows: управление значками, звуком, быстрыми настройками, мониторами и автоматизацией.
+**Расширение системного трея Windows 11** — управление значками, звуком, быстрыми настройками и отдельными панелями на дополнительных мониторах.
 
-[![Последний релиз](https://img.shields.io/github/v/release/Smirty8181/TrayX?label=release)](https://github.com/Smirty8181/TrayX/releases/latest)
+[![Последний релиз](https://img.shields.io/github/v/release/Smirty8181/TrayX?label=релиз)](https://github.com/Smirty8181/TrayX/releases/latest)
 
 **Технологии:** C#, .NET 10, WPF и Windows API. PowerShell используется для сборки и запуска. TrayX в этом репозитории не содержит Rust-кода.
 
