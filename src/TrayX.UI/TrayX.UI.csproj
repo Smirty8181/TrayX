@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>$(TrayXWindowsTargetFramework)</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>..\..\assets\branding\trayx.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\branding\trayx.ico" Link="Assets\trayx.ico" />
+    <None Include="..\..\assets\branding\trayx.ico" Link="trayx.ico" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\assets\branding\trayx-256.png" Link="trayx-256.png" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="TrayX.IntegrationTests" />
+    <ProjectReference Include="..\TrayX.Contracts\TrayX.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+</Project>

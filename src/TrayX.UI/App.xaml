@@ -1,0 +1,24 @@
+<Application x:Class="TrayX.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:svc="clr-namespace:TrayX.UI.Services"
+             ShutdownMode="OnExplicitShutdown">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Theme.Dark.xaml" />
+                <ResourceDictionary Source="Themes/Controls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <svc:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+            <svc:BoolToVisibilityConverter x:Key="InverseBoolToVisibility" Invert="True" />
+            <svc:InverseBoolConverter x:Key="InverseBool" />
+            <svc:StringToVisibilityConverter x:Key="StringToVisibility" />
+            <svc:StringToVisibilityConverter x:Key="InverseStringToVisibility" Invert="True" />
+            <svc:NullToVisibilityConverter x:Key="NullToVisibility" />
+            <svc:NullToVisibilityConverter x:Key="InverseNullToVisibility" Invert="True" />
+            <svc:ShellIconConverter x:Key="ShellIcon" />
+            <svc:ResourceBrushConverter x:Key="ResourceBrush" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

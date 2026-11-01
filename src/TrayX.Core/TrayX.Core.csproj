@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>$(TrayXWindowsTargetFramework)</TargetFramework>
+    <ApplicationIcon>..\..\assets\branding\trayx.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\branding\trayx.ico" Link="trayx.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrayX.Application\TrayX.Application.csproj" />
+    <ProjectReference Include="..\TrayX.Contracts\TrayX.Contracts.csproj" />
+    <ProjectReference Include="..\TrayX.Modules\TrayX.Modules.csproj" />
+    <ProjectReference Include="..\TrayX.Storage\TrayX.Storage.csproj" />
+    <ProjectReference Include="..\TrayX.Windows\TrayX.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.14" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>

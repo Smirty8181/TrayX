@@ -1,0 +1,550 @@
+<UserControl x:Class="TrayX.UI.Views.SettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:TrayX.UI.Localization"
+             FontFamily="{StaticResource TrayX.FontFamily}"
+             Foreground="{DynamicResource TrayX.TextBrush}">
+    <UserControl.Resources>
+        <Style x:Key="SectionTitle" TargetType="TextBlock" BasedOn="{StaticResource H2}">
+            <Setter Property="Margin" Value="0,0,0,12" />
+        </Style>
+
+        <DataTemplate x:Key="ChoiceOptionTemplate">
+            <TextBlock Text="{Binding Label}" />
+        </DataTemplate>
+
+        <Style x:Key="AccentSwatch" TargetType="RadioButton">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FocusVisualStyle" Value="{StaticResource TrayX.FocusVisual}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Width="38" Height="38">
+                            <Ellipse x:Name="Ring"
+                                     Width="36"
+                                     Height="36"
+                                     Stroke="{DynamicResource TrayX.TextBrush}"
+                                     StrokeThickness="2"
+                                     Opacity="0" />
+                            <Ellipse Width="26"
+                                     Height="26"
+                                     Fill="{TemplateBinding Background}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Ring" Property="Opacity" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Ring" Property="Opacity" Value="0.45" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Ring" Property="Stroke" Value="{DynamicResource TrayX.AccentBrush}" />
+                                <Setter TargetName="Ring" Property="Opacity" Value="1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ValueText" TargetType="TextBlock" BasedOn="{StaticResource MonoValue}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="{DynamicResource TrayX.TextMutedBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer Style="{StaticResource PageScroll}">
+        <StackPanel Margin="0,0,14,8">
+            <Border Margin="0,0,0,12"
+                    Style="{StaticResource WarningBar}"
+                    Visibility="{Binding IsCoreAvailable, Converter={StaticResource InverseBoolToVisibility}}">
+                <TextBlock Foreground="{DynamicResource TrayX.WarningBrush}"
+                           Style="{StaticResource Caption}"
+                           Text="{loc:Loc Settings_CoreUnavailable}" />
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Appearance}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_Theme}" />
+                        <Border Grid.Column="1"
+                                Padding="3"
+                                Background="{DynamicResource TrayX.SurfaceAltBrush}"
+                                CornerRadius="11">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton Command="{Binding SetThemeCommand}"
+                                             CommandParameter="dark"
+                                             Content="{loc:Loc Settings_ThemeDark}"
+                                             GroupName="Theme"
+                                             IsChecked="{Binding IsThemeDark, Mode=OneWay}"
+                                             Style="{StaticResource SegmentRadio}" />
+                                <RadioButton Command="{Binding SetThemeCommand}"
+                                             CommandParameter="light"
+                                             Content="{loc:Loc Settings_ThemeLight}"
+                                             GroupName="Theme"
+                                             IsChecked="{Binding IsThemeLight, Mode=OneWay}"
+                                             Style="{StaticResource SegmentRadio}" />
+                                <RadioButton Command="{Binding SetThemeCommand}"
+                                             CommandParameter="system"
+                                             Content="{loc:Loc Settings_ThemeSystem}"
+                                             GroupName="Theme"
+                                             IsChecked="{Binding IsThemeSystem, Mode=OneWay}"
+                                             Style="{StaticResource SegmentRadio}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_Language}" />
+                        <Border Grid.Column="1"
+                                Padding="3"
+                                Background="{DynamicResource TrayX.SurfaceAltBrush}"
+                                CornerRadius="11">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton Command="{Binding SetLanguageCommand}"
+                                             CommandParameter="ru"
+                                             Content="{loc:Loc Settings_LanguageRu}"
+                                             GroupName="Language"
+                                             IsChecked="{Binding IsLanguageRu, Mode=OneWay}"
+                                             Style="{StaticResource SegmentRadio}" />
+                                <RadioButton Command="{Binding SetLanguageCommand}"
+                                             CommandParameter="en"
+                                             Content="{loc:Loc Settings_LanguageEn}"
+                                             GroupName="Language"
+                                             IsChecked="{Binding IsLanguageEn, Mode=OneWay}"
+                                             Style="{StaticResource SegmentRadio}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_ClockFormat}" />
+                        <ComboBox Grid.Column="1"
+                                  ItemTemplate="{StaticResource ChoiceOptionTemplate}"
+                                  ItemsSource="{Binding ClockFormatOptions}"
+                                  SelectedValue="{Binding ClockFormat, Mode=TwoWay}"
+                                  SelectedValuePath="Value"
+                                  Style="{StaticResource ComboBox}" />
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <TextBlock Margin="0,0,0,10"
+                               Style="{StaticResource Body}"
+                               Text="{loc:Loc Settings_Accent}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ItemsControl ItemsSource="{Binding Accents}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <RadioButton Background="{Binding Brush}"
+                                                 Command="{Binding DataContext.SelectAccentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                 CommandParameter="{Binding}"
+                                                 GroupName="Accent"
+                                                 IsChecked="{Binding IsSelected, Mode=OneWay}"
+                                                 Style="{StaticResource AccentSwatch}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="110"
+                                     Padding="10,7"
+                                     FontSize="12"
+                                     Style="{StaticResource SearchBox}"
+                                     Text="{Binding AccentHex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Margin="6,0,0,0"
+                                    Command="{Binding ApplyAccentCommand}"
+                                    Content="{loc:Loc Common_Apply}"
+                                    Style="{StaticResource GhostButton}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Tray}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_TrayEnabled}" />
+                        <ToggleButton Grid.Column="1"
+                                      IsChecked="{Binding TrayIconEnabled, Mode=TwoWay}"
+                                      Style="{StaticResource Switch}" />
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_TrayClick}" />
+                        <ComboBox Grid.Column="1"
+                                  ItemTemplate="{StaticResource ChoiceOptionTemplate}"
+                                  ItemsSource="{Binding TrayClickOptions}"
+                                  SelectedValue="{Binding TrayLeftClickAction, Mode=TwoWay}"
+                                  SelectedValuePath="Value"
+                                  Style="{StaticResource ComboBox}" />
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_Notifications}" />
+                        <ToggleButton Grid.Column="1"
+                                      IsChecked="{Binding ShowTrayNotifications, Mode=TwoWay}"
+                                      Style="{StaticResource Switch}" />
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_DeviceSounds}" />
+                        <ToggleButton Grid.Column="1"
+                                      IsChecked="{Binding PlayDeviceSounds, Mode=TwoWay}"
+                                      Style="{StaticResource Switch}" />
+                    </Grid>
+
+                    <TextBlock Margin="0,8,0,6"
+                               Foreground="{DynamicResource TrayX.TextFaintBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{Binding DeviceSoundPathText}"
+                               TextTrimming="CharacterEllipsis"
+                               ToolTip="{Binding DeviceSoundPathText}" />
+                    <WrapPanel>
+                        <Button Margin="0,0,6,0"
+                                Command="{Binding SelectDeviceSoundCommand}"
+                                Content="{loc:Loc Settings_SoundChoose}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,0"
+                                Command="{Binding PreviewDeviceSoundCommand}"
+                                Content="{loc:Loc Settings_SoundPreview}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Command="{Binding ClearDeviceSoundCommand}"
+                                Content="{loc:Loc Settings_SoundClear}"
+                                Style="{StaticResource GhostButton}" />
+                    </WrapPanel>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_LiveTray}" />
+                        <ToggleButton Grid.Column="1"
+                                      IsChecked="{Binding TrayLiveEnabled, Mode=TwoWay}"
+                                      Style="{StaticResource Switch}" />
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_LiveInterval}" />
+                        <ComboBox Grid.Column="1"
+                                  ItemTemplate="{StaticResource ChoiceOptionTemplate}"
+                                  ItemsSource="{Binding LiveIntervalOptions}"
+                                  SelectedValue="{Binding TrayLivePollMs, Mode=TwoWay}"
+                                  SelectedValuePath="Value"
+                                  Style="{StaticResource ComboBox}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Startup}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,16,0">
+                            <TextBlock Style="{StaticResource Body}" Text="{loc:Loc Settings_Autostart}" />
+                            <TextBlock Margin="0,3,0,0"
+                                       Foreground="{DynamicResource TrayX.TextFaintBrush}"
+                                       Style="{StaticResource Faint}"
+                                       Text="{loc:Loc Settings_AutostartNote}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ToggleButton Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      IsChecked="{Binding LaunchAtStartup, Mode=TwoWay}"
+                                      Style="{StaticResource Switch}" />
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_OpenDashboard}" />
+                        <ToggleButton Grid.Column="1"
+                                      IsChecked="{Binding OpenDashboardOnStartup, Mode=TwoWay}"
+                                      Style="{StaticResource Switch}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Monitoring}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center"
+                                   Style="{StaticResource Body}"
+                                   Text="{loc:Loc Settings_Interval}" />
+                        <ComboBox Grid.Column="1"
+                                  ItemTemplate="{StaticResource ChoiceOptionTemplate}"
+                                  ItemsSource="{Binding IntervalOptions}"
+                                  SelectedValue="{Binding MonitorIntervalMs, Mode=TwoWay}"
+                                  SelectedValuePath="Value"
+                                  Style="{StaticResource ComboBox}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Windows}" />
+                    <WrapPanel>
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenWindowsSettingsCommand}"
+                                CommandParameter="sound"
+                                Content="{loc:Loc Settings_OpenSound}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenWindowsSettingsCommand}"
+                                CommandParameter="display"
+                                Content="{loc:Loc Settings_OpenDisplays}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenWindowsSettingsCommand}"
+                                CommandParameter="personalization"
+                                Content="{loc:Loc Settings_OpenPersonalization}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenWindowsSettingsCommand}"
+                                CommandParameter="startup"
+                                Content="{loc:Loc Settings_OpenStartupApps}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenWindowsSettingsCommand}"
+                                CommandParameter="taskbar"
+                                Content="{loc:Loc Settings_OpenTraySettings}"
+                                Style="{StaticResource GhostButton}" />
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Config}" />
+                    <WrapPanel>
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding ImportSettingsCommand}"
+                                Content="{loc:Loc Settings_ConfigImport}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding ExportSettingsCommand}"
+                                Content="{loc:Loc Settings_ConfigExport}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding ResetSettingsCommand}"
+                                Content="{loc:Loc Settings_ConfigResetButton}"
+                                Style="{StaticResource GhostButton}" />
+                    </WrapPanel>
+                    <TextBlock Margin="0,2,0,0"
+                               Foreground="{DynamicResource TrayX.TextFaintBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{loc:Loc Settings_ConfigNote}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Data}" />
+                    <WrapPanel>
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenDataFolderCommand}"
+                                Content="{loc:Loc Settings_OpenData}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Margin="0,0,6,6"
+                                Command="{Binding OpenLogsCommand}"
+                                Content="{loc:Loc Settings_OpenLogs}"
+                                Style="{StaticResource GhostButton}" />
+                    </WrapPanel>
+                    <TextBlock Margin="0,6,0,0"
+                               Foreground="{DynamicResource TrayX.TextFaintBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{loc:Loc Settings_DataNote}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_Hotkeys}" />
+                    <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{loc:Loc Settings_HotkeysNote}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource SectionTitle}" Text="{loc:Loc Settings_About}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                       Style="{StaticResource Faint}"
+                                       Text="{loc:Loc Settings_Version}" />
+                            <TextBlock Style="{StaticResource ValueText}" Text="{Binding AppVersionText}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                       Style="{StaticResource Faint}"
+                                       Text="{loc:Loc Settings_CoreVersion}" />
+                            <TextBlock Style="{StaticResource ValueText}" Text="{Binding CoreVersionText}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                            <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                       Style="{StaticResource Faint}"
+                                       Text="{loc:Loc Settings_Protocol}" />
+                            <TextBlock Style="{StaticResource ValueText}" Text="{Binding ProtocolVersionText}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
+                            <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                       Style="{StaticResource Faint}"
+                                       Text="{loc:Loc Settings_WindowsBuild}" />
+                            <TextBlock Style="{StaticResource ValueText}" Text="{Binding WindowsBuildText}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <TextBlock Margin="0,0,0,8"
+                               Style="{StaticResource H3}"
+                               Text="{loc:Loc Settings_LimitationsTitle}" />
+                    <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{loc:Loc Settings_LimitTray}"
+                               TextWrapping="Wrap" />
+                    <TextBlock Margin="0,6,0,0"
+                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{loc:Loc Settings_LimitAudio}"
+                               TextWrapping="Wrap" />
+                    <TextBlock Margin="0,6,0,0"
+                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Faint}"
+                               Text="{loc:Loc Settings_LimitBrightness}"
+                               TextWrapping="Wrap" />
+
+                    <Border Style="{StaticResource Divider}" />
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,16,0">
+                            <TextBlock Style="{StaticResource Body}" Text="{loc:Loc Settings_Exit}" />
+                            <TextBlock Margin="0,3,0,0"
+                                       Foreground="{DynamicResource TrayX.TextFaintBrush}"
+                                       Style="{StaticResource Faint}"
+                                       Text="{loc:Loc Settings_ExitNote}"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                        <Button Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Command="{Binding ExitCommand}"
+                                Content="{loc:Loc Settings_Exit}"
+                                Style="{StaticResource DangerButton}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,219 @@
+<UserControl x:Class="TrayX.UI.Views.TrayAppsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="clr-namespace:TrayX.UI.Localization"
+             FontFamily="{StaticResource TrayX.FontFamily}"
+             Foreground="{DynamicResource TrayX.TextBrush}">
+    <ScrollViewer Style="{StaticResource PageScroll}">
+        <StackPanel Margin="0,0,14,8">
+            <Border Margin="0,0,0,12" Style="{StaticResource WarningBar}">
+                <TextBlock Foreground="{DynamicResource TrayX.WarningBrush}"
+                           Style="{StaticResource Body}"
+                           Text="{loc:Loc TrayApps_SafetyNotice}"
+                           TextWrapping="Wrap" />
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <CheckBox FontWeight="SemiBold"
+                              IsChecked="{Binding AutoHideEnabled, Mode=TwoWay}"
+                              Content="{loc:Loc TrayApps_AutoHideMaster}" />
+                    <TextBlock Margin="0,5,0,0"
+                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Body}"
+                               Text="{loc:Loc TrayApps_AutoHideMasterHint}"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock FontWeight="SemiBold" Text="{loc:Loc TrayApps_RunningWindowsTitle}" />
+                    <TextBlock Margin="0,5,0,10"
+                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Body}"
+                               Text="{loc:Loc TrayApps_RunningWindowsHint}"
+                               TextWrapping="Wrap" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Padding="8,6"
+                                  ItemsSource="{Binding AvailableWindows}"
+                                  SelectedItem="{Binding SelectedWindow}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontWeight="SemiBold" Text="{Binding ProcessName}" />
+                                        <TextBlock Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                                   Text="{Binding Title}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Command="{Binding LoadWindowsCommand}"
+                                Content="{loc:Loc TrayApps_LoadWindows}"
+                                Style="{StaticResource GhostButton}" />
+                        <Button Grid.Column="2"
+                                Margin="8,0,0,0"
+                                Command="{Binding AddSelectedWindowCommand}"
+                                Content="{loc:Loc TrayApps_AddSelectedWindow}"
+                                Style="{StaticResource PrimaryButton}" />
+                        <Button Grid.Column="3"
+                                Margin="8,0,0,0"
+                                Command="{Binding HideSelectedWindowCommand}"
+                                Content="{loc:Loc TrayApps_HideSelectedWindow}"
+                                Style="{StaticResource GhostButton}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock FontWeight="SemiBold" Text="{loc:Loc TrayApps_RecoveryTitle}" />
+                            <TextBlock Margin="0,4,0,0"
+                                       Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                       Style="{StaticResource Body}"
+                                       Text="{Binding PendingRecoveriesText}" />
+                        </StackPanel>
+                        <Button Grid.Column="1"
+                                Command="{Binding RestorePendingWindowsCommand}"
+                                Content="{loc:Loc TrayApps_RestorePending}"
+                                Style="{StaticResource PrimaryButton}" />
+                    </Grid>
+                    <ItemsControl Margin="0,10,0,0" ItemsSource="{Binding PendingRecoveries}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center"
+                                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                               Style="{StaticResource Body}"
+                                               Text="{Binding WindowTitle}" />
+                                    <Button Grid.Column="1"
+                                            Margin="8,0,0,0"
+                                            Command="{Binding DataContext.RestoreRecoveryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            Content="{loc:Loc TrayApps_RestoreOne}"
+                                            IsEnabled="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource InverseBool}}"
+                                            Style="{StaticResource GhostButton}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,0,0,12" Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock FontWeight="SemiBold" Text="{loc:Loc TrayApps_AddTitle}" />
+                    <TextBlock Margin="0,5,0,10"
+                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                               Style="{StaticResource Body}"
+                               Text="{loc:Loc TrayApps_AddHint}"
+                               TextWrapping="Wrap" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Padding="12,9"
+                                 Style="{StaticResource SearchBox}"
+                                 Text="{Binding NewRuleText, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Command="{Binding AddRuleCommand}"
+                                Content="{loc:Loc TrayApps_Add}"
+                                Style="{StaticResource GhostButton}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock VerticalAlignment="Center"
+                           Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                           Style="{StaticResource Caption}"
+                           Text="{Binding CountText}" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Command="{Binding ImportCommand}"
+                            Content="{loc:Loc TrayApps_Import}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBool}}"
+                            Style="{StaticResource GhostButton}" />
+                    <Button Margin="8,0,0,0"
+                            Command="{Binding ExportCommand}"
+                            Content="{loc:Loc TrayApps_Export}"
+                            Style="{StaticResource GhostButton}" />
+                    <Button Margin="8,0,0,0"
+                            Command="{Binding SaveCommand}"
+                            Content="{loc:Loc Common_Save}"
+                            IsEnabled="{Binding IsDirty}"
+                            Style="{StaticResource PrimaryButton}" />
+                </StackPanel>
+            </Grid>
+
+            <Border Style="{StaticResource InfoBar}"
+                    Visibility="{Binding ShowEmpty, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock Style="{StaticResource Body}" Text="{loc:Loc TrayApps_Empty}" />
+            </Border>
+
+            <ItemsControl ItemsSource="{Binding Rules}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,0,0,8" Style="{StaticResource Card}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox VerticalAlignment="Center"
+                                          IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
+                                <StackPanel Grid.Column="1" Margin="12,0">
+                                    <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
+                                    <TextBlock Margin="0,3,0,0"
+                                               Foreground="{DynamicResource TrayX.TextMutedBrush}"
+                                               Style="{StaticResource Body}"
+                                               Text="{Binding MatchText}" />
+                                    <TextBlock Margin="0,3,0,0"
+                                               Foreground="{DynamicResource TrayX.TextFaintBrush}"
+                                               Style="{StaticResource Faint}"
+                                               Text="{Binding ModeText}" />
+                                    <CheckBox Margin="0,6,0,0"
+                                              Content="{loc:Loc TrayApps_AutoHideRule}"
+                                              IsEnabled="{Binding CanAutoHide}"
+                                              IsChecked="{Binding AutoHide, Mode=TwoWay}" />
+                                    <TextBlock Margin="0,3,0,0"
+                                               Foreground="{DynamicResource TrayX.WarningBrush}"
+                                               Style="{StaticResource Faint}"
+                                               Text="{Binding StatusText}" />
+                                </StackPanel>
+                                <Button Grid.Column="2"
+                                        Command="{Binding RemoveCommand}"
+                                        Content="{loc:Loc Common_Delete}"
+                                        Style="{StaticResource GhostButton}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

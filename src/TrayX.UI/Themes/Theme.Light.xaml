@@ -1,0 +1,81 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="TrayX.BackgroundColor">#FFF4F6FC</Color>
+    <Color x:Key="TrayX.BackgroundAltColor">#FFECEFF8</Color>
+    <Color x:Key="TrayX.SurfaceColor">#F7FFFFFF</Color>
+    <Color x:Key="TrayX.SurfaceAltColor">#FFF1F4FB</Color>
+    <Color x:Key="TrayX.SurfaceRaisedColor">#FFFFFFFF</Color>
+    <Color x:Key="TrayX.BorderColor">#FFDCE3F2</Color>
+    <Color x:Key="TrayX.BorderStrongColor">#FFC3CEE4</Color>
+    <Color x:Key="TrayX.TextColor">#FF101828</Color>
+    <Color x:Key="TrayX.TextMutedColor">#FF667085</Color>
+    <Color x:Key="TrayX.TextFaintColor">#FF626D7F</Color>
+    <Color x:Key="TrayX.AccentColor">#FF7C5CFF</Color>
+    <Color x:Key="TrayX.AccentSoftColor">#297C5CFF</Color>
+    <Color x:Key="TrayX.NavSelectedColor">#267C5CFF</Color>
+    <Color x:Key="TrayX.DangerColor">#FFE5484D</Color>
+    <Color x:Key="TrayX.DangerSoftColor">#1FE5484D</Color>
+    <Color x:Key="TrayX.SuccessColor">#FF16A34A</Color>
+    <Color x:Key="TrayX.SuccessSoftColor">#1F16A34A</Color>
+    <Color x:Key="TrayX.WarningColor">#FFD97706</Color>
+    <Color x:Key="TrayX.WarningSoftColor">#1FD97706</Color>
+    <Color x:Key="TrayX.TrackColor">#FFE8ECF6</Color>
+    <Color x:Key="TrayX.OverlayColor">#E6F4F6FC</Color>
+    <Color x:Key="TrayX.ShadowColor">#33000000</Color>
+
+    <SolidColorBrush x:Key="TrayX.BackgroundBrush" Color="{StaticResource TrayX.BackgroundColor}" />
+    <SolidColorBrush x:Key="TrayX.BackgroundAltBrush" Color="{StaticResource TrayX.BackgroundAltColor}" />
+    <SolidColorBrush x:Key="TrayX.SurfaceBrush" Color="{StaticResource TrayX.SurfaceColor}" />
+    <SolidColorBrush x:Key="TrayX.SurfaceAltBrush" Color="{StaticResource TrayX.SurfaceAltColor}" />
+    <SolidColorBrush x:Key="TrayX.SurfaceRaisedBrush" Color="{StaticResource TrayX.SurfaceRaisedColor}" />
+    <SolidColorBrush x:Key="TrayX.BorderBrush" Color="{StaticResource TrayX.BorderColor}" />
+    <SolidColorBrush x:Key="TrayX.BorderStrongBrush" Color="{StaticResource TrayX.BorderStrongColor}" />
+    <SolidColorBrush x:Key="TrayX.TextBrush" Color="{StaticResource TrayX.TextColor}" />
+    <SolidColorBrush x:Key="TrayX.TextMutedBrush" Color="{StaticResource TrayX.TextMutedColor}" />
+    <SolidColorBrush x:Key="TrayX.TextFaintBrush" Color="{StaticResource TrayX.TextFaintColor}" />
+    <SolidColorBrush x:Key="TrayX.AccentBrush" Color="{StaticResource TrayX.AccentColor}" />
+    <SolidColorBrush x:Key="TrayX.PinkBrush" Color="#FFFF3F94" />
+    <SolidColorBrush x:Key="TrayX.AccentSoftBrush" Color="{StaticResource TrayX.AccentSoftColor}" />
+    <SolidColorBrush x:Key="TrayX.NavSelectedBrush" Color="{StaticResource TrayX.NavSelectedColor}" />
+    <SolidColorBrush x:Key="TrayX.DangerBrush" Color="{StaticResource TrayX.DangerColor}" />
+    <SolidColorBrush x:Key="TrayX.DangerSoftBrush" Color="{StaticResource TrayX.DangerSoftColor}" />
+    <SolidColorBrush x:Key="TrayX.SuccessBrush" Color="{StaticResource TrayX.SuccessColor}" />
+    <SolidColorBrush x:Key="TrayX.SuccessSoftBrush" Color="{StaticResource TrayX.SuccessSoftColor}" />
+    <SolidColorBrush x:Key="TrayX.WarningBrush" Color="{StaticResource TrayX.WarningColor}" />
+    <SolidColorBrush x:Key="TrayX.WarningSoftBrush" Color="{StaticResource TrayX.WarningSoftColor}" />
+    <SolidColorBrush x:Key="TrayX.TrackBrush" Color="{StaticResource TrayX.TrackColor}" />
+    <SolidColorBrush x:Key="TrayX.OverlayBrush" Color="{StaticResource TrayX.OverlayColor}" />
+    <SolidColorBrush x:Key="TrayX.OnAccentBrush" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TrayX.ShadowBrush" Color="{StaticResource TrayX.ShadowColor}" />
+
+    <LinearGradientBrush x:Key="TrayX.AccentGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF7C5CFF" Offset="0" />
+        <GradientStop Color="#FFFF3F94" Offset="1" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TrayX.HeroGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#267C5CFF" Offset="0" />
+        <GradientStop Color="#14FF3F94" Offset="0.55" />
+        <GradientStop Color="#00FFFFFF" Offset="1" />
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="TrayX.WindowGlowBrush"
+                         Center="0.08,0.02"
+                         GradientOrigin="0.08,0.02"
+                         RadiusX="0.75"
+                         RadiusY="0.65">
+        <GradientStop Color="#335B2BD6" Offset="0" />
+        <GradientStop Color="#00F4F6FC" Offset="1" />
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="TrayX.WindowGlowSecondaryBrush"
+                         Center="0.96,0.96"
+                         GradientOrigin="0.96,0.96"
+                         RadiusX="0.65"
+                         RadiusY="0.6">
+        <GradientStop Color="#26C2248B" Offset="0" />
+        <GradientStop Color="#00F4F6FC" Offset="1" />
+    </RadialGradientBrush>
+
+</ResourceDictionary>

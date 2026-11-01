@@ -1,0 +1,48 @@
+<Window x:Class="TrayX.UI.Views.IdentifyOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:TrayX.UI.Localization"
+        Title="TrayX"
+        Icon="pack://application:,,,/Assets/trayx.ico"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        Topmost="True"
+        Opacity="0"
+        FontFamily="{StaticResource TrayX.FontFamily}">
+    <Grid Margin="28">
+        <Border Background="#E6070B16"
+                BorderBrush="{DynamicResource TrayX.AccentBrush}"
+                BorderThickness="2"
+                CornerRadius="36">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="NumberText"
+                           HorizontalAlignment="Center"
+                           FontFamily="{StaticResource TrayX.DisplayFontFamily}"
+                           FontSize="132"
+                           FontWeight="SemiBold"
+                           Foreground="White" />
+                <TextBlock x:Name="CaptionText"
+                           Margin="0,-8,0,0"
+                           HorizontalAlignment="Center"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Foreground="#CCF3F6FF" />
+                <Border x:Name="PrimaryBadge"
+                        Margin="0,16,0,0"
+                        Padding="14,6"
+                        HorizontalAlignment="Center"
+                        Background="{DynamicResource TrayX.AccentBrush}"
+                        CornerRadius="999">
+                    <TextBlock FontSize="12"
+                               FontWeight="SemiBold"
+                               Foreground="White"
+                               Text="{loc:Loc Displays_OverlayPrimary}" />
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

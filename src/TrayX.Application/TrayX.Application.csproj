@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TrayX.Domain\TrayX.Domain.csproj" />
+    <ProjectReference Include="..\TrayX.Contracts\TrayX.Contracts.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>$(TrayXTargetFramework)</TargetFramework>
+  </PropertyGroup>
+
+</Project>
